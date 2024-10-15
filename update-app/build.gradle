@@ -7,6 +7,7 @@ android {
     compileSdk 34
 
     defaultConfig {
+        namespace "com.vector.update_app"
         minSdk 14
         targetSdk 34
         versionCode 1
