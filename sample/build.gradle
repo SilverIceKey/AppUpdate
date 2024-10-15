@@ -32,13 +32,11 @@ dependencies {
     //compile 'com.qianwen:update-app-kotlin:1.1.0'
     //okgo
     //rxjava 1
-    implementation 'com.android.support:palette-v7:26.1.0'
-    //权限引导
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'io.reactivex:rxjava:1.2.9'
     implementation 'io.reactivex:rxandroid:1.2.0'
-    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    implementation 'com.vanniktech:rxpermission:0.10.0'
+    implementation project(':update-app')
 }

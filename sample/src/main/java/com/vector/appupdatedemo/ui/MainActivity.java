@@ -2,20 +2,26 @@ package com.vector.appupdatedemo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.vanniktech.rxpermission.Permission;
+import com.vanniktech.rxpermission.RealRxPermission;
 import com.vector.appupdatedemo.R;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.DrawableUtil;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.CheckReturnValue;
+import io.reactivex.disposables.Disposable;
+import rx.Observable;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,16 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void getPermission() {
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
+        RealRxPermission.getInstance(this).request(WRITE_EXTERNAL_STORAGE)
+                .subscribe(new SingleObserver<Permission>() {
                     @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Permission permission) {
+                        if (permission.state() == Permission.State.GRANTED) {
                             Toast.makeText(MainActivity.this, "已授权", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "未授权", Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
                     }
                 });
 

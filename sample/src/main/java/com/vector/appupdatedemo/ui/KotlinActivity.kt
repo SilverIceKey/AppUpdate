@@ -1,9 +1,12 @@
 package com.vector.appupdatedemo.ui
 
+import android.databinding.DataBindingUtil
+import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.vector.appupdatedemo.R
+import com.vector.appupdatedemo.databinding.ActivityKotlinBinding
 import com.vector.appupdatedemo.ext.cancelProgressDialog
 import com.vector.appupdatedemo.ext.dialog
 import com.vector.appupdatedemo.ext.showProgressDialog
@@ -15,40 +18,40 @@ import com.vector.update_app.UpdateAppBean
 import com.vector.update_app.UpdateAppManager
 import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.*
-import kotlinx.android.synthetic.main.activity_kotlin.*
 import org.json.JSONObject
 import java.io.File
 import java.util.*
 
 class KotlinActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityKotlinBinding
     private val mUpdateUrl = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_kotlin)
-        btn_default.setSolidTheme()
-        btn_diy_1.setStrokeTheme()
-        btn_diy_2.setStrokeTheme()
-        btn_diy_3.setStrokeTheme()
-        btn_diy_4.setStrokeTheme()
-        btn_diy_5.setStrokeTheme()
+        binding = setContentView(this,R.layout.activity_kotlin)
+        binding.btnDefault.setSolidTheme()
+        binding.btnDiy1.setStrokeTheme()
+        binding.btnDiy2.setStrokeTheme()
+        binding.btnDiy3.setStrokeTheme()
+        binding.btnDiy4.setStrokeTheme()
+        binding.btnDiy5.setStrokeTheme()
 
-        btn_default.setOnClickListener {
+        binding.btnDefault.setOnClickListener {
             defaultUpdate()
         }
-        btn_diy_1.setOnClickListener {
+        binding.btnDiy1.setOnClickListener {
             updateDiy1()
         }
 
-        btn_diy_2.setOnClickListener {
+        binding.btnDiy2.setOnClickListener {
             updateDiy2()
         }
-        btn_diy_3.setOnClickListener {
+        binding.btnDiy3.setOnClickListener {
             updateDiy3()
         }
-        btn_diy_4.setOnClickListener {
+        binding.btnDiy4.setOnClickListener {
             updateDiy4()
         }
-        btn_diy_5.setOnClickListener {
+        binding.btnDiy5.setOnClickListener {
             updateDiy5()
         }
     }
