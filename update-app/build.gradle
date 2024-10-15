@@ -1,13 +1,16 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
+plugins {
+    id 'com.android.library'
+    id("maven-publish")
+}
+
 android {
-    compileSdkVersion 26
-    buildToolsVersion "25.0.3"
+    compileSdk 34
+
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdk 14
+        targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -22,29 +25,21 @@ android {
         abortOnError false
         warning 'InvalidPackage'
     }
+}
 
-
+publishing {
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
+                from components.findByName("androidRelease") // For Android projects with 'release' variant
+                groupId = project.findProperty("GROUP_ID") as String
+                artifactId = "update-app"
+                version = project.findProperty("VERSION") as String
+            }
+        }
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    provided 'com.android.support:appcompat-v7:26.1.0'
-    testCompile 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 }
-
-//添加
-publish {
-    userOrg = 'qianwen'//bintray.com用户名
-    groupId = 'com.qianwen'//jcenter上的路径
-    artifactId = 'update-app'//项目名称
-    publishVersion = rootProject.ext.update_app_version//版本号
-    desc = 'a library for android version update'
-    website = 'https://github.com/WVector/AppUpdate'
-}
-repositories {
-    mavenCentral()
-}
-
